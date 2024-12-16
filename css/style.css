@@ -129,15 +129,9 @@ h1, h2, h3, h4, h5, h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url(../img/hero-bg.jpg) top center;
+  background: url(../img/unpam.jpg) top center;
   background-size: cover;
   position: relative;
-}
-
-@media (min-width: 1024px) {
-  #hero {
-    background-attachment: fixed;
-  }
 }
 
 #hero:before {
@@ -161,6 +155,12 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   flex-direction: column;
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  #hero {
+    background-attachment: fixed;
+  }
 }
 
 #hero h1 {
@@ -792,6 +792,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-item:hover img {
   top: -30px;
+}
+
+.row.counters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 /* Team Section
