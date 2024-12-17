@@ -6,6 +6,29 @@ import {addBooking} from '../api.js';
 
 
 jQuery(document).ready(function ($) {
+  window.openModal = function(image, title, description) {
+    // Set dynamic content
+    $("#modalImage").attr("src", `data:image/png;base64,${image}`).css({
+      "object-fit": "contain", // Ensures the image fits inside the container without cropping
+      "max-width": "100%",      // Prevents the image from exceeding the container width
+      "max-height": "100%"      // Prevents the image from exceeding the container height
+    });
+    $("#detailModalLabel").text(title);
+    $("#modalDescription").text(description);
+
+    // Show the modal with animation
+    $("#detailModal").modal("show");
+  };
+  
+  // event handler for close modal manual
+  $('#detailModal').on('hidden.bs.modal', function () {
+    console.log('Modal ditutup');
+  });
+
+  $("#closeButton").click(function () {
+    $("#detailModal").modal("hide");
+  });
+
   // Header fixed and Back to top button
   $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
@@ -16,6 +39,7 @@ jQuery(document).ready(function ($) {
       $('#header').removeClass('header-fixed');
     }
   });
+
   $('.back-to-top').click(function () {
     $('html, body').animate({
       scrollTop: 0
@@ -131,12 +155,13 @@ jQuery(document).ready(function ($) {
 });
 
 document.addEventListener("DOMContentLoaded", async function() {
+  //EXECUTE DATA INTROS
   const dataIntros = await initPage();
   if (dataIntros) {
     const iframe = document.getElementById('map');
     iframe.src = dataIntros.maps;
 
-    document.getElementById('cta-link').setAttribute('href', 'https://wa.me/${data.phoneNumber}');
+    document.getElementById('cta-link').setAttribute('href', 'https://wa.me/${dataIntros.phoneNumber}');
     document.querySelector('.twitter').setAttribute('href', dataIntros.twitter);
     document.querySelector('.facebook').setAttribute('href', dataIntros.facebook);
     document.querySelector('.instagram').setAttribute('href', dataIntros.instagram);
@@ -166,7 +191,8 @@ document.addEventListener("DOMContentLoaded", async function() {
       backgroundElement.style.minHeight = "300px"; 
     }
   }
-  
+
+  //EXECUTE DATA SERVICE
   const dataService = await initService();
   if(dataService){
     const container = document.querySelector(".last-3-index-service-container");
@@ -176,7 +202,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         try {
           const iconBox = document.createElement("div");
           iconBox.classList.add("icon-box", "wow", "fadeInUp");
-            const iconDiv = document.createElement("div");
+          const iconDiv = document.createElement("div");
           iconDiv.classList.add("icon");
           if (item.image) {
             iconDiv.innerHTML = `<img src="data:image/png;base64,${item.image}" alt="icon" style="width: 50px; height: 50px; border-radius: 50%;">`;
@@ -210,7 +236,9 @@ document.addEventListener("DOMContentLoaded", async function() {
         serviceBox.innerHTML = `
             <div class="box">
                 <div class="icon">
-                    <a href=""><img src="data:image/png;base64,${service.image}" alt="service icon" style="width: 50px; height: 50px; border-radius: 50%;"></a>
+                    <a href="javascript:void(0);" onclick="openModal('${service.image}', '${service.title}', '${service.description}')">
+                      <img src="data:image/png;base64,${service.image}" alt="service icon" style="width: 50px; height: 50px; border-radius: 50%;">
+                    </a>
                 </div>
                 <h4 class="title"><a href="">${service.title}</a></h4>
                 <p class="description">${service.description}</p>
@@ -222,6 +250,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   }
 
+  //EXECUTE DATA PORTOFOLIO
   const dataInitPortofolio = await initPortofolio();
   if (dataInitPortofolio) {
     const portfolioFlters = document.getElementById('portfolio-flters');
@@ -253,14 +282,14 @@ document.addEventListener("DOMContentLoaded", async function() {
       const portfolioItem = document.createElement('div');
       portfolioItem.classList.add('col-lg-3', 'col-md-6', 'portfolio-item', item.category); 
       portfolioItem.innerHTML = `
-        <a href="${item.url}">
-          <img src="data:image/png;base64,${item.image}" alt="${item.title}">
-          <div class="details">
-            <h4>${item.title}</h4>
-            <span>${item.description}</span>
-          </div>
-        </a>
-      `;
+      <a href="javascript:void(0);" onclick="openModal('${item.image}', '${item.title}', '${item.description}')">
+        <img src="data:image/png;base64,${item.image}" alt="${item.title}" style="object-fit: cover; object-position: center; width: 100%; height: 100%; ">
+        <div class="details">
+          <h4>${item.title}</h4>
+          <span>${item.description}</span>
+        </div>
+      </a>
+    `;
 
       portfolioWrapper.appendChild(portfolioItem);
     });
@@ -276,6 +305,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     });
 
 
+    //EXECUTE DATA CREW
     const initCrewPenjahat = await initCrew();
     if(initCrewPenjahat){
       const teamList = document.getElementById('team-list');

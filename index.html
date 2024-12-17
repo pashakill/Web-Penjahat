@@ -25,7 +25,22 @@
 </head>
 
 <body>
-
+  <!-- Bootstrap Modal Portofolio-->
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="detailModalLabel">Title</h5>
+        </div>
+        <div class="modal-body text-center">
+          <img id="modalImage" src="" alt="Image" class="img-fluid rounded mb-3 shadow-sm" style="max-height: 400px;">
+          <p id="modalDescription" class="lead"></p>
+          <!-- Close Button -->
+          <button id="closeButton" type="button" class="btn btn-secondary mt-3">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!--==========================
   Header
   ============================-->
@@ -306,7 +321,7 @@
   <script src="contactform/contactform.js"></script>
 
   <!-- Template Main Javascript File -->
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js" defer></script>
 
 </body>
 </html>
